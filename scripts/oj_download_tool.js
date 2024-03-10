@@ -20,13 +20,26 @@
         });
         return code;
     };
+    function getFileExtension() {
+        let language = document.querySelector('input[type="hidden"]').value;
+        const extensions = {
+            "C++": ".cpp",
+            "C": ".c",
+            "Java": ".java",
+            "Python2": ".py",
+            "Python3": ".py",
+            
+            "default": ".txt"
+        };
+        return extensions[language] || extensions.default;
+    }
     function downloadCode() {
         let blob = new Blob([getCode()], { type: "text/plain" });
         let fileName = window.location.pathname.slice(9);
         
         let a = document.createElement("a");
         a.href = window.URL.createObjectURL(blob);
-        a.download = fileName + ".cpp";
+        a.download = fileName + getFileExtension();
     
         document.body.appendChild(a);
         a.click();
